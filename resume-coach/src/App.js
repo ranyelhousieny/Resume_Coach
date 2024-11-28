@@ -7,6 +7,10 @@ import {
   Typography,
   Container,
   Box,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import axios from 'axios';
 
@@ -17,6 +21,12 @@ function App() {
     jobDescription,
     setJobDescription,
   ] = useState('');
+  const [apiKey, setApiKey] =
+    useState('');
+  const [
+    selectedModel,
+    setSelectedModel,
+  ] = useState('gpt-4');
   const [
     coachingAdvice,
     setCoachingAdvice,
@@ -39,21 +49,40 @@ function App() {
       );
     };
 
+  // Handle API key input
+  const handleApiKeyChange = (
+    event
+  ) => {
+    setApiKey(
+      event.target.value
+    );
+  };
+
+  // Handle model selection
+  const handleModelChange = (
+    event
+  ) => {
+    setSelectedModel(
+      event.target.value
+    );
+  };
+
   // Submit the files and get coaching advice
   const handleSubmit =
     async () => {
       if (
         !resume ||
-        !jobDescription
+        !jobDescription ||
+        !apiKey
       ) {
         alert(
-          'Please upload a resume and provide a job description.'
+          'Please provide a resume, job description, and API key.'
         );
         return;
       }
 
       try {
-        // Step 1: Read the resume file
+        // Read the resume file
         const reader =
           new FileReader();
         reader.onload =
@@ -61,11 +90,11 @@ function App() {
             const resumeText =
               reader.result;
 
-            // Step 2: Format the request payload
+            // Format the request payload
             const requestBody =
               {
                 model:
-                  'gpt-4', // Choose the desired OpenAI model
+                  selectedModel,
                 messages: [
                   {
                     role: 'system',
@@ -79,21 +108,21 @@ function App() {
                 ],
               };
 
-            // Step 3: Call the OpenAI API
+            // Call the OpenAI API
             const response =
               await axios.post(
-                'https://api.openai.com/v1/chat/completions', // OpenAI Chat Completion endpoint
+                'https://api.openai.com/v1/chat/completions',
                 requestBody,
                 {
                   headers: {
                     'Content-Type':
                       'application/json',
-                    Authorization: `Bearer YOUR_OPENAI_API_KEY`, // Replace with your OpenAI API key
+                    Authorization: `Bearer ${apiKey}`,
                   },
                 }
               );
 
-            // Step 4: Update the UI with coaching advice
+            // Update the UI with coaching advice
             setCoachingAdvice(
               response.data
                 .choices[0]
@@ -132,11 +161,59 @@ function App() {
 
       <Box marginBottom='20px'>
         <Typography variant='h6'>
+          OpenAI API Key:
+        </Typography>
+        <TextField
+          fullWidth
+          type='password'
+          placeholder='Enter your OpenAI API key'
+          value={apiKey}
+          onChange={
+            handleApiKeyChange
+          }
+        />
+      </Box>
+
+      <Box marginBottom='20px'>
+        <Typography variant='h6'>
+          Select LLM Model:
+        </Typography>
+        <FormControl
+          fullWidth>
+          <InputLabel id='model-select-label'>
+            Model
+          </InputLabel>
+          <Select
+            labelId='model-select-label'
+            value={
+              selectedModel
+            }
+            onChange={
+              handleModelChange
+            }>
+            <MenuItem value='gpt-4o-mini'>
+              GPT-4o-mini
+            </MenuItem>
+            <MenuItem value='gpt-4o'>
+              GPT-4o
+            </MenuItem>
+            <MenuItem value='gpt-4'>
+              GPT-4
+            </MenuItem>
+            <MenuItem value='gpt-3.5-turbo'>
+              GPT-3.5 Turbo
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box marginBottom='20px'>
+        <Typography variant='h6'>
           Upload Your Resume:
         </Typography>
         <input
           type='file'
-          accept='.pdf,.docx'
+          accept='.pdf,.docx,.txt'
           onChange={
             handleResumeChange
           }
