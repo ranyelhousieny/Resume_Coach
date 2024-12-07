@@ -162,3 +162,5 @@ cython_debug/
 #.idea/
 .env
 resume.txt
+*.pem
+*.txt

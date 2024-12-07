@@ -31,10 +31,6 @@ function App() {
     coachingAdvice,
     setCoachingAdvice,
   ] = useState('');
-  const [
-    sagemakerEndpoint,
-    setSageMakerEndpoint,
-  ] = useState('');
 
   // Handle resume file selection
   const handleResumeChange = (
@@ -61,14 +57,6 @@ function App() {
       event.target.value
     );
   };
-
-  // Handle SageMaker endpoint input
-  const handleSageMakerEndpointChange =
-    (event) => {
-      setSageMakerEndpoint(
-        event.target.value
-      );
-    };
 
   // Handle option selection
   const handleOptionChange = (
@@ -104,12 +92,15 @@ function App() {
       }
 
       try {
+        // Read the resume file
         const reader =
           new FileReader();
         reader.onload =
           async () => {
             const resumeText =
               reader.result;
+
+            // Prepare the request payload
             const prompt = `Resume: \n${resumeText}\n\nJob Description: \n${jobDescription}`;
             let response;
 
@@ -161,7 +152,7 @@ function App() {
               // Llama 3.2 1B Instruct API
               response =
                 await axios.post(
-                  'http://54.162.1.222:8000/generate',
+                  'http://<your-ec2-public-ip>:8000/generate', // Replace with your EC2 public IP
                   { prompt },
                   {
                     headers: {
@@ -174,33 +165,10 @@ function App() {
                 response.data
                   .response
               );
-            } else if (
-              selectedOption ===
-              'sagemaker'
-            ) {
-              // SageMaker API
-              response =
-                await axios.post(
-                  sagemakerEndpoint,
-                  {
-                    inputs:
-                      prompt,
-                  },
-                  {
-                    headers: {
-                      'Content-Type':
-                        'application/json',
-                    },
-                  }
-                );
-              setCoachingAdvice(
-                response.data
-                  .body
-                  .generated_text
-              );
             }
           };
 
+        // Read the resume file as text
         reader.readAsText(
           resume
         );
@@ -253,10 +221,6 @@ function App() {
               Llama 3.2 1B
               Instruct
             </MenuItem>
-            <MenuItem value='sagemaker'>
-              SageMaker
-              Endpoint
-            </MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -274,26 +238,6 @@ function App() {
             value={apiKey}
             onChange={
               handleApiKeyChange
-            }
-          />
-        </Box>
-      )}
-
-      {selectedOption ===
-        'sagemaker' && (
-        <Box marginBottom='20px'>
-          <Typography variant='h6'>
-            SageMaker Endpoint
-            URL:
-          </Typography>
-          <TextField
-            fullWidth
-            placeholder='Enter your SageMaker endpoint URL'
-            value={
-              sagemakerEndpoint
-            }
-            onChange={
-              handleSageMakerEndpointChange
             }
           />
         </Box>
