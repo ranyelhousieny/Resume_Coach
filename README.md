@@ -2,72 +2,101 @@
 
 A web application to help you create and improve your professional resume using AI-powered feedback and suggestions. Get personalized recommendations to make your resume stand out and increase your chances of landing your dream job.
 
-## Project Structure
-
-This repository contains two main implementations of the Resume Coach:
-
-- [`resume-coach/`](./resume-coach/) - The original React-based implementation
-- [`resume-coach OpenAI/`](./resume-coach%20OpenAI/) - An enhanced version using OpenAI's capabilities for more advanced AI-powered suggestions
-
 ## Features
 
-- 📝 **Interactive Resume Builder**
-  - User-friendly interface for creating and editing resumes
-  - Real-time preview as you type
-  - Section templates for experience, education, skills, and more
+- 📝 **Interactive Resume Analysis**
+  - Upload your resume (TXT, PDF, DOCX)
+  - Paste job descriptions
+  - Get instant AI-powered feedback
 
 - 🤖 **AI-Powered Feedback**
-  - Get instant suggestions for improving your content
-  - Writing style recommendations
-  - Industry-specific keyword suggestions
-  - Grammar and clarity improvements
+  - Skills alignment analysis
+  - Experience relevance check
+  - Keyword optimization
+  - Format and presentation tips
 
-- 🎨 **Professional Templates**
-  - Multiple modern and ATS-friendly designs
-  - Customizable colors and fonts
-  - Responsive layouts that look great on any device
+- 🎯 **Smart Processing**
+  - Automatic text truncation for optimal results
+  - Efficient token management
+  - Clear feedback on improvements
 
-- 💾 **Export Options**
-  - Download as PDF
-  - Print-ready format
-  - ATS-optimized output
+## Quick Start
 
-## Getting Started
+1. Clone the repository:
+```bash
+git clone https://github.com/ranyelhousieny/Resume_Coach.git
+cd Resume_Coach
+```
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn package manager
+2. Install dependencies:
+```bash
+cd "resume-coach OpenAI"
+npm install
+```
 
-### Installation
+3. Start the application:
+```bash
+PORT=54735 HOST=0.0.0.0 npm start
+```
 
-Each implementation has its own setup instructions. Choose the version that best suits your needs:
+4. Open http://localhost:54735 in your browser
 
-1. **Original React Version**
-   ```bash
-   cd resume-coach
-   npm install
-   npm start
-   ```
-   For more details, see the [Original Resume Coach Setup](./resume-coach/README.md)
+## Sample Files
 
-2. **OpenAI-Enhanced Version**
-   ```bash
-   cd "resume-coach OpenAI"
-   npm install
-   npm start
-   ```
-   For more details, see the [OpenAI-Enhanced Resume Coach Setup](./resume-coach%20OpenAI/README.md)
+We provide sample resumes and job descriptions for testing:
+
+### Software Engineer
+- [Sample Resume](/samples/software-engineer-resume.txt)
+- [Sample Job Description](/samples/software-engineer-jd.txt)
+
+### Data Scientist
+- [Sample Resume](/samples/data-scientist-resume.txt)
+- [Sample Job Description](/samples/data-scientist-jd.txt)
+
+## Technical Details
+
+- **Frontend**: React with Material-UI
+- **AI Integration**: LangChain with GPT-3.5-turbo
+- **File Handling**: Custom hooks for efficient file processing
+- **State Management**: React hooks for local state
+- **Error Handling**: Comprehensive error management for API calls
+
+## Project Structure
+
+```
+resume-coach OpenAI/
+├── public/
+│   └── samples/          # Sample files for testing
+├── src/
+│   ├── components/       # React components
+│   │   ├── ResumeForm.js
+│   │   └── CoachingAdvice.js
+│   ├── services/         # API and business logic
+│   │   └── langchainService.js
+│   ├── hooks/           # Custom React hooks
+│   │   └── useFileReader.js
+│   └── App.js           # Main application component
+└── package.json
+```
+
+## API Key Setup
+
+You'll need an OpenAI API key to use this application:
+1. Go to https://platform.openai.com/api-keys
+2. Create an account or log in
+3. Generate a new API key
+4. Enter the key in the application
 
 ## Contributing
 
-Contributions are welcome! Here's how you can help:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 
-This project is open source and available under the MIT License. Feel free to use, modify, and distribute it as you see fit.
+This project is open source and available under the MIT License.
+
+## Acknowledgments
+
+- OpenAI for providing the GPT API
+- LangChain for AI integration tools
+- Material-UI for the component library
