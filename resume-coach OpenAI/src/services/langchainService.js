@@ -20,6 +20,7 @@ const truncateText = (text, maxTokens) => {
 
 export const analyzeResume = async (resumeText, jobDescription, apiKey) => {
   // Reserve tokens for the system prompt and response
+
   const SYSTEM_PROMPT_TOKENS = 150;
   const RESPONSE_TOKENS = 500;
   const MAX_TOTAL_TOKENS = 2000; // Lower limit for mini model
@@ -34,11 +35,13 @@ export const analyzeResume = async (resumeText, jobDescription, apiKey) => {
 
   // Initialize the LLM with temperature and max tokens
   const model = new ChatOpenAI({
+
     modelName: "gpt-4o-mini",
     temperature: 0.5, // Lower temperature for more focused responses
     openAIApiKey: apiKey,
     maxTokens: RESPONSE_TOKENS,
   });
+
 
   // Create the prompt template with concise instructions
   const prompt = ChatPromptTemplate.fromMessages([
@@ -64,12 +67,14 @@ Be concise and specific.`],
     // If texts were truncated, add a note to the response
     const wasTruncated = truncatedResume !== resumeText || truncatedJobDescription !== jobDescription;
     if (wasTruncated) {
+
       return response + "\n\nNote: Some content was truncated. Focus on key skills and requirements.";
     }
 
     return response;
   } catch (error) {
     if (error.message.includes("rate_limit_exceeded")) {
+
       return "Error: Rate limit exceeded. Please try again with shorter content or wait a moment.";
     }
     if (error.message.includes("model_not_found")) {

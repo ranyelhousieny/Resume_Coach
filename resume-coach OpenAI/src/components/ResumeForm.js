@@ -34,6 +34,7 @@ export const ResumeForm = ({
       </Box>
 
       <Alert severity="info" sx={{ mb: 2 }}>
+
         For best results, include only the most relevant sections of your resume and the key requirements from the job description.
         <Box mt={1}>
           Download sample files: {' '}
@@ -73,7 +74,7 @@ export const ResumeForm = ({
           rows={6}
           fullWidth
           variant='outlined'
-          placeholder='Paste the job description here...'
+          placeholder='Paste the key parts of the job description here...'
           value={jobDescription}
           onChange={onJobDescriptionChange}
         />
