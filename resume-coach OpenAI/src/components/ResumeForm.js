@@ -34,11 +34,16 @@ export const ResumeForm = ({
       </Box>
 
       <Alert severity="info" sx={{ mb: 2 }}>
-        For best results, include only the most relevant sections of your resume and the key requirements from the job description. Very long inputs will be automatically truncated.
+
+        For best results, include only the most relevant sections of your resume and the key requirements from the job description.
         <Box mt={1}>
           Download sample files: {' '}
-          <Link href="/samples/sample-resume.txt" download>Resume</Link> | {' '}
-          <Link href="/samples/sample-jd.txt" download>Job Description</Link>
+          <Link href="/samples/software-engineer-resume.txt" download>Software Engineer Resume</Link> | {' '}
+          <Link href="/samples/software-engineer-jd.txt" download>Job Description</Link>
+        </Box>
+        <Box mt={1}>
+          <Link href="/samples/data-scientist-resume.txt" download>Data Scientist Resume</Link> | {' '}
+          <Link href="/samples/data-scientist-jd.txt" download>Job Description</Link>
         </Box>
       </Alert>
 
